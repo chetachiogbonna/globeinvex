@@ -22,7 +22,7 @@ function AboutGlobalInvestment() {
         <div className="w-full lg:w-1/2">
           <div className="text-[14px] uppercase text-light">about global investment</div>
 
-          <h2 className="section-header lg:text-[48px] mt-[15px]">
+          <h2 className="section-header lg:text-[48px] my-[15px]">
             <span className="font-bold text-green">Global Invest:</span> Your Partner in Financial Success
           </h2>
           

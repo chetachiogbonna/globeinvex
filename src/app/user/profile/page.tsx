@@ -1,10 +1,30 @@
 "use client";
 
+import { useAuthContext } from "@/context/AuthContext";
+import { updateUser } from "@/lib/actions/user.actions";
 import { LinkIcon, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const Profile = () => {
+  const { user, setUser } = useAuthContext()
+
+  const [fileUrl, setFileUrl] = useState("")
+
+  const handleSaveImage = async () => {
+    const inputElement = document.querySelector(".profile-upload-input") as HTMLInputElement;
+    const file = inputElement.files && inputElement.files[0]
+    if (!file) return // toast 
+
+    try {
+      const updatedUser = await updateUser({ type: "profile", file })
+      setUser(updatedUser!)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <section>
       <div className="flex flex-col sm:flex-row gap-3 lg:gap-10">
@@ -12,7 +32,7 @@ const Profile = () => {
           <div className="relative">
             <div className="h-48 bg-gradient-to-br from-gray-300 to-gray-500 w-full rounded-br-[130px]">
               <Image 
-                src="/images/profile-placeholder.jpg"
+                src={fileUrl || user?.profilePicUrl || "/images/profile-placeholder.jpg"}
                 alt="user profile"
                 width={100}
                 height={100}
@@ -20,8 +40,8 @@ const Profile = () => {
               />
             </div>
             <div className="absolute bottom-6 left-6 text-white">
-              <h1 className="text-xl font-bold mb-2.5 pb-1 border-b">Chetachi Ogbonna</h1>
-              <p className="text-sm">Chetachi909</p>
+              <h1 className="text-xl font-bold mb-2.5 pb-1 border-b">{user?.name}</h1>
+              <p className="text-sm">{user?.username}</p>
             </div>
           </div>
 
@@ -33,6 +53,13 @@ const Profile = () => {
               <input 
                 type="file"  
                 className="hidden profile-upload-input"  
+                onChange={() => {
+                  const inputElement = document.querySelector(".profile-upload-input")! as HTMLInputElement
+                  const file = inputElement.files && inputElement.files[0]
+                  if (!file) return // toast
+                  const fileUrl = URL.createObjectURL(file)
+                  setFileUrl(fileUrl)
+                }}
               />
 
               <div className="flex flex-col gap-1 mb-6">
@@ -40,8 +67,8 @@ const Profile = () => {
                 <button 
                   className="bg-green text-xs text-white px-2 py-1 rounded-lg flex gap-1 items-center hover:bg-[#0a9b9c]"
                   onClick={() => {
-                    const element = document.querySelector(".profile-upload-input")! as HTMLInputElement
-                    element.click();
+                    const inputElement = document.querySelector(".profile-upload-input")! as HTMLInputElement
+                    inputElement.click();
                   }}
                 >
                   <LinkIcon className="w-3 h-3" />
@@ -49,7 +76,10 @@ const Profile = () => {
                 </button>
               </div>
               
-              <button className="bg-green hover:bg-[#0a9b9c] text-xs text-white px-2 py-1 rounded-lg">
+              <button 
+                className="bg-green hover:bg-[#0a9b9c] text-xs text-white px-2 py-1 rounded-lg"
+                onClick={handleSaveImage}
+              >
                 Save Image
               </button>
             </div>

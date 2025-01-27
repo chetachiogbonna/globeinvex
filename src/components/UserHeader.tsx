@@ -1,9 +1,14 @@
+"use client";
+
 import { Search } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import UserMobileNav from './UserMobileNav'
+import { useAuthContext } from '@/context/AuthContext'
 
 function UserHeader() {
+  const { user } = useAuthContext()
+
   return (
     <header className="w-full text-white fixed z-50 bg-green py-2 md:py-5 px-2 lg:px-14">
       <div className="flex justify-between items-center">
@@ -43,13 +48,13 @@ function UserHeader() {
               <input 
                 type="text" 
                 readOnly 
-                value="Welcome Chetachi Ogbonna"  
+                value={`Welcome ${user?.name}`}  
                 className="bg-transparent outline-none pl-1 pr-3 text-[14px]" 
               />
             </div>
 
             <Image 
-              src="/images/profile-placeholder.jpg"
+              src={user?.profilePicUrl || "/images/profile-placeholder.jpg"}
               alt="user profile"
               width={40}
               height={40}

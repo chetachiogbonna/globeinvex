@@ -16,6 +16,8 @@ import {
 import { ChevronRight, Database, Download, Home, Inbox, LogOut, Send, User, Users } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/context/AuthContext";
+import { signOut } from "@/lib/actions/user.actions";
 
 function UserMobileNav() {
   const router = useRouter();
@@ -74,6 +76,8 @@ function UserMobileNav() {
     }
   ]
 
+  const { user } = useAuthContext()
+
   return (
     <Sheet>
       <div className="pt-5 w-full px-4 md:hidden mr-2 flex justify-between items-center">
@@ -102,7 +106,7 @@ function UserMobileNav() {
         <SheetHeader>
           <SheetTitle className="px-10 py-4 flex justify-start items-center gap-4 border-b border-gray-500 mb-2">
             <Image 
-              src="/images/profile-placeholder.jpg"
+              src={user?.profilePicUrl || "/images/profile-placeholder.jpg"}
               alt="logo"
               width={40}
               height={40}
@@ -175,7 +179,7 @@ function UserMobileNav() {
 
           <SheetClose 
             className="px-10 w-full flex gap-5 items-center"
-            onClick={() => {}}
+            onClick={signOut}
           >
             <LogOut size={30} color="#babed0" />
             <li 

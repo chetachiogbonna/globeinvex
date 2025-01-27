@@ -1,6 +1,8 @@
-"use client"
+"use client";
 
-import { useEffect } from 'react';
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 declare global {
   interface Window {
@@ -14,53 +16,77 @@ declare global {
 }
 
 const GoogleTranslate = () => {
+  const pathname = usePathname();
+  const isUserPage = pathname.startsWith('/user');
+
+  const [isInitialized, setIsInitialized] = useState(false);
+
   useEffect(() => {
     const addGoogleTranslateScript = () => {
-      if (!document.querySelector('#google-translate-script')) {
-        const script = document.createElement('script');
-        script.id = 'google-translate-script';
+      if (!document.querySelector("#google-translate-script")) {
+        const script = document.createElement("script");
+        script.id = "google-translate-script";
         script.src = `https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit`;
         script.async = true;
+        script.onload = () => console.log("Google Translate script loaded.");
+        script.onerror = () => console.error("Failed to load Google Translate script.");
         document.body.appendChild(script);
       }
     };
 
     window.googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        { pageLanguage: 'en' },
-        'google_translate_element'
-      );
+      if (window.google && window.google.translate) {
+        new window.google.translate.TranslateElement(
+          { pageLanguage: "en" },
+          "google_translate_element"
+        );
+        console.log("Google Translate initialized.");
+        setIsInitialized(true);
+      } else {
+        console.error("Google Translate API is not loaded yet.");
+      }
     };
 
     addGoogleTranslateScript();
-  }, []);
+  }, [pathname]);
 
   const changeLanguageByButtonClick = (language: string) => {
+    if (!isInitialized) {
+      console.error("Google Translate widget is not initialized yet.");
+      return;
+    }
+
     const selectField = document.querySelector<HTMLSelectElement>(
-      '#google_translate_element select'
+      "#google_translate_element select"
     );
+
     if (selectField) {
       for (let i = 0; i < selectField.children.length; i++) {
         const option = selectField.children[i] as HTMLOptionElement;
+
         if (option.value === language) {
           selectField.selectedIndex = i;
-          selectField.dispatchEvent(new Event('change'));
+          selectField.dispatchEvent(new Event("change"));
+          console.log(`Language changed to: ${language}`);
           break;
         }
       }
     } else {
-      console.error('Google Translate select field not found.');
+      console.error("Google Translate select field not found.");
     }
   };
 
   return (
     <div className="text-black">
-      <div id="google_translate_element" style={{ display: 'none' }}></div>
+      <div id="google_translate_element" style={{ display: "none" }}></div>
 
       <select
         id="language"
         onChange={(e) => changeLanguageByButtonClick(e.target.value)}
+        disabled={!isInitialized}
+        className={cn("", { "w-full border border-gray-700 text-sm rounded": isUserPage })}
       >
+        <option value="">Select Language</option>
         <option value="af">Afrikanns</option>
         <option value="sq">Albanian</option>
         <option value="ar">Arabic</option>

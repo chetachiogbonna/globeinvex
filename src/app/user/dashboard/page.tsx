@@ -1,9 +1,30 @@
+"use client";
+
+import AlertModel from '@/components/AlertModel';
+import TradingViewChart from '@/components/TradingViewChart';
+import { useAuthContext } from '@/context/AuthContext'
 import { Copy, PlusCircle } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaArrowRight } from 'react-icons/fa'
 
 function UserDashboard() {
+  const { user } = useAuthContext();
+  const [copied, setCopied] = useState(false);
+
+  const userReferralLink = `https://globeinvex.vercel.app/register?ref=${user?.username}`;
+
+  const copyToClipboard = async () => {
+    if (typeof window !== "undefined" && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(userReferralLink);
+        setCopied(true);
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
+    }
+  }
+
   return (
     <section>
       <div className="relative border-b pb-4 flex flex-col-reverse md:flex-row justify-start md:justify-between items-start md:items-center mb-8">
@@ -60,7 +81,7 @@ function UserDashboard() {
                 Account Name:
               </p>
               <p className="py-[0.9rem] px-[1.1rem] font-semibold text-[14px] w-1/2">
-                Chetachi Ogbonna
+                {user?.name}
               </p>
             </div>
             <div className="bg-white flex rounded-[4px] hover:shadow-md transition-all duration-500">
@@ -97,12 +118,28 @@ function UserDashboard() {
             </div>
             <div className="bg-white flex rounded-[4px] hover:shadow-md transition-all duration-500">
               <p className="py-[0.9rem] px-[1.1rem] font-semibold text-[14px]">
-                https://globeinvex.com/user/register?ref=Chetachi909 <span className="py-1 px-2 bg-[#24b314] rounded text-white">copy</span>
+                {userReferralLink} <span className="py-1 px-2 bg-[#24b314] rounded text-white cursor-pointer" onClick={copyToClipboard}>copy</span>
               </p>
             </div>
           </div>
         </div>
       </div>
+
+      <div className="relative border-b pb-4 flex flex-col-reverse md:flex-row justify-start md:justify-between items-start md:items-center mb-8">
+        <div className="absolute -bottom-1 left-0 w-8 h-1 bg-green" />
+        <h3 className="text-[1rem] text-green font-semibold">
+          Market Data
+        </h3>
+      </div>
+
+      <TradingViewChart />
+
+      {copied && (
+        <AlertModel 
+          title="copied to clipboard"
+          continueButtonAction={() => setCopied(false)}
+        />
+      )}
     </section>
   )
 }
