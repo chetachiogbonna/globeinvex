@@ -1,6 +1,9 @@
 import { packages } from "@/constants"
+import { getLoggedInUser } from "@/lib/actions/user.actions"
 
-function Invest() {
+async function Invest() {
+  const currentUser = await getLoggedInUser()
+
   return (
     <section>
       <div className="flex flex-col">
@@ -55,7 +58,7 @@ function Invest() {
                 type="email"
                 id="email"
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-lg focus:outline-green h-10 text-[14px] placeholder:text-[13px]"
-                placeholder="surveychetachi@gmail.com"
+                placeholder={currentUser.email}
               />
             </div>
             <div>

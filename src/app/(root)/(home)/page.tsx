@@ -5,7 +5,7 @@ import OurTeam from "@/components/OurTeam";
 import TestimonialSection from "@/components/TestimonialSection";
 import { ourBlogSectionDetails, serviceDetails } from "@/constants";
 import { cn } from "@/lib/utils";
-import { ShieldHalf } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -52,27 +52,28 @@ function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border">
-              {serviceDetails.map(({ title, description }) => {
+              {serviceDetails.map((service) => {
                 return (
                   <div
-                    key={title}
+                    key={service.title}
                     className="py-[45px] pr-[25px] pl-[35px] border"
                   >
                     <div>
-                      <ShieldHalf size={60} />
+                      <service.icon size={60} />
                     </div>
 
                     <h3 className="mt-[30px] mb-[15px] font-bold">
-                      <Link href="service-detail" className="text-5">{title}</Link>
+                      <Link href="service-detail" className="text-5">{service.title}</Link>
                     </h3>
 
-                    <p className="mb-5 text-[16px] text-light">{description}</p>
+                    <p className="mb-5 text-[16px] text-light">{service.description}</p>
 
                     <Link 
                       href="service-detail"
-                      className="uppercase text-[14px] text-[#777]"
+                      className="uppercase text-[14px] text-[#777] flex items-center"
                     >
-                      more &gt;
+                      more 
+                      <ChevronRight />
                     </Link>
                   </div>
                 )

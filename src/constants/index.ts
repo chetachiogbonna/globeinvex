@@ -1,3 +1,6 @@
+// import { Sign } from "lucide-react";
+import { FaSignal } from "react-icons/fa";
+
 export const navLinks = [
   {
     name: "HOME",
@@ -47,19 +50,23 @@ export const footerLinks = [
 export const serviceDetails = [
   {
     title: "Strategy",
-    description: "Thought leadership pass the clap hackathon wearables."
+    description: "Thought leadership pass the clap hackathon wearables.",
+    icon: FaSignal
   },
   {
     title: "Financial",
-    description: "Platform omnichannel click thought leadership pivot"
+    description: "Platform omnichannel click thought leadership pivot",
+    icon: FaSignal
   },
   {
     title: "Insurance",
-    description: "Disrupt taste makers help council emerging."
+    description: "Disrupt taste makers help council emerging.",
+    icon: FaSignal
   },
   {
     title: "Estate",
-    description: "Mobile ready proprietary dedication intuitive"
+    description: "Mobile ready proprietary dedication intuitive",
+    icon: FaSignal
   }
 ]
 

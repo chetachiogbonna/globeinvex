@@ -5,6 +5,7 @@ import { Home, Inbox, LogOut, Database, Send, Users, User, Download, ChevronRigh
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -25,6 +26,9 @@ import {
 
 import Image from "next/image"
 import Link from "next/link"
+import GoogleTranslate from "./GoogleTranslate";
+import { signOut } from "@/lib/actions/user.actions";
+import { useAuthContext } from "@/context/AuthContext";
 
 function UserSidebar() {
   const accountItems = [
@@ -81,6 +85,8 @@ function UserSidebar() {
     }
   ]
 
+  const { user } = useAuthContext()
+
   return (
     <>  
       <div className="hidden md:block lg:hidden pl-20">
@@ -97,7 +103,7 @@ function UserSidebar() {
           
           <div className="py-4 md:py-2 border-b border-gray-500">
             <Image 
-              src="/images/profile-placeholder.jpg"
+              src={user?.profilePicUrl || "/images/profile-placeholder.jpg"}
               alt="user profile"
               width={40}
               height={40}
@@ -122,7 +128,7 @@ function UserSidebar() {
             <li 
               className="py-5 px-[5px] border-b border-gray-500 w-full flex justify-center items-center"
             >
-              <button>
+              <button onClick={signOut}>
                 <LogOut size={20} color="#babed0" />
               </button>
             </li>
@@ -135,7 +141,7 @@ function UserSidebar() {
           <SidebarHeader className="bg-[#F2F4F8] border-b">
             <div className="flex gap-2 justify-center items-center">
               <Image 
-                src="/images/profile-placeholder.jpg"
+                src={user?.profilePicUrl || "/images/profile-placeholder.jpg"}
                 alt="user profile"
                 width={50}
                 height={50}
@@ -143,9 +149,9 @@ function UserSidebar() {
               />
 
               <div>
-                <p className="capitalize">Chetachi Ogbonna</p>
+                <p className="capitalize">{user?.name}</p>
                 <p className="text-[0.63rem] uppercase text-[#00000066]">
-                  Chetachi909
+                  {user?.username}
                 </p>
               </div>
             </div>
@@ -245,7 +251,7 @@ function UserSidebar() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <button>
+                      <button onClick={signOut}>
                         <LogOut color="#08a" />
                         <span className="py-[7px] pl-2">Logout</span>
                       </button>
@@ -255,6 +261,21 @@ function UserSidebar() {
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
+
+          <SidebarFooter className="py-1 gap-1">
+            <GoogleTranslate />
+            <p className="text-[10px] text-light">Powered by</p>
+            <Link href="https://translate.google.com" className="pl-2 flex items-center gap-1">
+              <Image 
+                src="/images/google-logo.png"
+                alt="google logo"
+                width={35}
+                height={0}
+              />
+
+              <p className="text-xs font-semibold">Translate</p>
+            </Link>
+          </SidebarFooter>
         </Sidebar>
       </div>
     </>

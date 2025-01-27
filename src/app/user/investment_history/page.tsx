@@ -17,6 +17,10 @@ function InvestmentHistory() {
           </div>
 
           <div className="pt-8 pb-5">
+            <p className="text-sm">you have not made any transactions yet</p>
+          </div>
+
+          {/* <div className="pt-8 pb-5">
             <div>
               <div className="pb-4 px-2 flex justify-between items-center">
                 <p className="text-xs font-semibold uppercase text-center">Name</p>
@@ -30,7 +34,7 @@ function InvestmentHistory() {
                 <p className="text-sm font-light">0000-00-00 00:00:00</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
