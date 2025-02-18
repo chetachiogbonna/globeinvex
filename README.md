@@ -6,10 +6,10 @@
   <br />
 
   <div>
-    <img src="https://img.shields.io/badge/-Next.js-black?style=for-the-badge&logoColor=white&logo=next.js" alt="next.js" />
-    <img src="https://img.shields.io/badge/-Appwrite-black?style=for-the-badge&logoColor=white&logo=appwrite&color=red" alt="appwrite" />
-    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
-    <img src="https://img.shields.io/badge/-Typescript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
+    <img src="https://img.shields.io/badge/-Next.js-black?style=for-the-badge&logoColor=white&logo=next.js" alt="Next.js Badge" />
+    <img src="https://img.shields.io/badge/-Appwrite-black?style=for-the-badge&logoColor=white&logo=appwrite&color=red" alt="Appwrite Badge" />
+    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="Tailwindcss Badge" />
+    <img src="https://img.shields.io/badge/-Typescript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="Typescript Badge" />
   </div>
 
   <h3 align="center">Global Invex</h3>
@@ -68,7 +68,7 @@ Create a new file named `.env.local` in the root of your project and add the fol
 NEXT_APPWRITE_KEY=your_appwrite_key
 NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
 NEXT_PUBLIC_APPWRITE_PROJECT=your_appwrite_project
-APPWRITE_DATABASE_ID=your-appwrite_database_id
+APPWRITE_DATABASE_ID=your_appwrite_database_id
 APPWRITE_USERSCOLLECTION_ID=your_appwrite_user_collection_id 
 APPWRITE_BUCKET_ID=your_appwrite_bucket_id
 ```
